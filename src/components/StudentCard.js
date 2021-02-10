@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-function StudentCard({title, description}) {
+function StudentCard({title, description,onDelete}) {
     const [clicked, setClicked] = useState(0);
     return <article>
         <h3>{title}</h3>
@@ -9,6 +9,8 @@ function StudentCard({title, description}) {
         <button onClick={() => {
              setClicked(clicked + 1)
         }}> Click me</button>
+
+        <button onClick={onDelete}> Delete</button>
     </article>
 }
 

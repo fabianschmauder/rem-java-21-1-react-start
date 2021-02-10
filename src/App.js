@@ -9,7 +9,12 @@ function App() {
         <div>
             {students.map(student => <StudentCard key={student.id}
                                                   title={"Name: " + student.name}
-                                                  description={"Uni: " + student.uni}/>)}
+                                                  description={"Uni: " + student.uni}
+                                                  onDelete={()=> {
+                                                      const updatedList = students.filter(item => item.id !== student.id);
+                                                      setStudents(updatedList)
+                                                  }}
+            />)}
 
             <button onClick={() =>
                 setStudents([
@@ -32,8 +37,17 @@ function App() {
                 )}>
                 Load Students
             </button>
+            <button onClick={() => {
+                const updatedList = [...students, {id: "new-id", name:"new student", uni: "super uni"}];
+                setStudents(updatedList)
+            } }>
+                Add Student
+            </button>
+
         </div>
     );
 }
 
 export default App;
+
+
