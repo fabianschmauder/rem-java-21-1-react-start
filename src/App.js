@@ -2,9 +2,16 @@ import './App.css';
 import {useState} from "react";
 import AddStudentForm from "./components/AddStudentForm";
 import StudentList from "./components/StudentList";
+import {loadStudentsApi} from "./services/users-service";
+
 
 function App() {
     const [students, setStudents] = useState([]);
+
+
+    function loadStudents(){
+        loadStudentsApi().then(result => setStudents(result.data))
+    }
 
     return (
         <div>
@@ -13,25 +20,7 @@ function App() {
               setStudents(updatedList)
           }}/>
 
-            <button onClick={() =>
-                setStudents([
-                        {
-                            id: "1",
-                            name: "Frank",
-                            uni: "cologne"
-                        },
-                        {
-                            id: "2",
-                            name: "Jochen",
-                            uni: "Hamburg"
-                        },
-                        {
-                            id: "3",
-                            name: "Jochen 3",
-                            uni: "Hamburg"
-                        }
-                    ]
-                )}>
+            <button onClick={loadStudents}>
                 Load Students
             </button>
 
