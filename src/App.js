@@ -1,5 +1,5 @@
 import './App.css';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import AddStudentForm from "./components/AddStudentForm";
 import StudentList from "./components/StudentList";
 import {loadStudentsApi} from "./services/users-service";
@@ -7,10 +7,17 @@ import {loadStudentsApi} from "./services/users-service";
 
 function App() {
     const [students, setStudents] = useState([]);
+    const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        loadStudents();
+    },[]);
 
     function loadStudents(){
-        loadStudentsApi().then(result => setStudents(result.data))
+        setLoading(true);
+        loadStudentsApi()
+            .then(result => setStudents(result.data))
+            .then(() => setLoading(false))
     }
 
     return (
@@ -19,7 +26,7 @@ function App() {
               const updatedList = students.filter(item => item.id !== student.id);
               setStudents(updatedList)
           }}/>
-
+            {loading && <div>Loading students</div>}
             <button onClick={loadStudents}>
                 Load Students
             </button>
